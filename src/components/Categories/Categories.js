@@ -12,19 +12,13 @@ const categories = (props) => {
         props.editCategory(category)
     }
 
-    function inputBlur(){
-        props.clearInput()
-        console.log('blur')
-    }
-
     return (
         <div className={classes.categories_navigation}>
             <div className={classes.add_category_wrapper}>
                 <input type="text"
                        value={props.inputValue}
                        onChange={(event) => props.setCategoryName(event)}
-                       ref={inputEl}
-                       onBlur={inputBlur}/>
+                       ref={inputEl}/>
                 <button disabled={props.inputValue === ''} onClick={props.renderCategory}>Add Category</button>
             </div>
 
