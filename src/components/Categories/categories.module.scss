@@ -5,12 +5,12 @@
   max-width: 230px;
   margin: 10px;
   font-size: 14px;
+  background: rgba(80, 138, 138, 0.3);
+  box-shadow: 0px 0px 6px 0px #508a8a;
 
   .add_category_wrapper {
     height: 100%;
     display: flex;
-    background: rgba(80, 138, 138,.3);
-    box-shadow: 0px 0px 6px 0px rgb(80, 138, 138);
 
     input {
       height: 30px;
@@ -31,8 +31,7 @@
         transform: scale(1.05);
       }
       &:disabled {
-        background: #b7cab7;
-        color: #eaecea;
+        background: #c8dcc8;
       }
     }
   }
@@ -41,8 +40,9 @@
     background: #fff;
     color: #4b7079;
     border-radius: 10px;
-    margin-top: 5px;
-    box-shadow: 0px 0px 6px 0px rgb(80, 138, 138);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-top: 1px;
 
     ul {
       list-style-type: none;
@@ -70,6 +70,7 @@
 
   .errorMessage {
     color: red;
+    background: #e8dada;
     text-align: left;
     font-size: 12px;
     padding: 5px;
@@ -85,6 +86,7 @@
     border-radius: 10px;
     animation-name: lefToRight;
     animation-duration: .3s;
+    box-shadow: 0px 0px 13px 0px #639c9c;
 
     ul {
       display: flex;
