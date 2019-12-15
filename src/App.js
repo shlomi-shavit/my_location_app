@@ -25,22 +25,19 @@ class App extends Component {
         const checkIfCategoryexist = categoriesList.includes(this.state.inputValue);
 
         this.setState({errorMessage: checkIfCategoryexist});
-        
-        if(this.state.editCategory !== '' && !checkIfCategoryexist){
-            const newInputValue = this.state.inputValue;
+
+        if(this.state.inputValue !== '' && !checkIfCategoryexist){
+
             const categoryIndex = categoriesList.findIndex(category => category === this.state.editCategory);
-            categoriesList[categoryIndex] = newInputValue;
+            categoriesList[categoryIndex] = this.state.inputValue;
+
+            if(!this.state.editCategory){
+                categoriesList.push(this.state.inputValue)
+            }
 
             this.setState({
                 inputValue: '',
                 editCategory: '',
-                categories: categoriesList
-            });
-        }
-        else if(this.state.inputValue !== '' && !checkIfCategoryexist){
-            categoriesList.push(this.state.inputValue);
-            this.setState({
-                inputValue: '',
                 categories: categoriesList
             });
         }
@@ -88,6 +85,7 @@ class App extends Component {
                     deleteCategory={this.deleteCategory}
                     editCategory={this.editCategory}
                     highlighted={this.state.selectedCategory}
+                    clearInput={this.clearInput}
                 />
             </div>
         );
