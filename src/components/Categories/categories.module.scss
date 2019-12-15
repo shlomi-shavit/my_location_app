@@ -9,10 +9,14 @@
   .add_category_wrapper {
     height: 100%;
     display: flex;
+    background: rgba(80, 138, 138,.3);
+    box-shadow: 0px 0px 6px 0px rgb(80, 138, 138);
 
     input {
       height: 30px;
       width: 100%;
+      border: none;
+      padding-left: 5px;
     }
     button {
       width: 160px;
@@ -20,8 +24,14 @@
       background: #79cc79;
       font-weight: bold;
       margin-left: 5px;
+      border: none;
+      transition: all .2s ease-in-out;
+      &:not([disabled]):hover {
+        background: #5c9e5c;
+        transform: scale(1.05);
+      }
       &:disabled {
-        background: #c8d8c8;
+        background: #b7cab7;
         color: #eaecea;
       }
     }
@@ -32,6 +42,7 @@
     color: #4b7079;
     border-radius: 10px;
     margin-top: 5px;
+    box-shadow: 0px 0px 6px 0px rgb(80, 138, 138);
 
     ul {
       list-style-type: none;

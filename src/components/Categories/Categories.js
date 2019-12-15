@@ -7,16 +7,14 @@ const categories = (props) => {
     let inputEl = React.createRef();
     let currentLi = React.createRef();
 
-    // add on blur
-    // close manfe bar
     function editCategory(category) {
         inputEl.current.focus();
         props.editCategory(category)
     }
 
     function inputBlur(){
-console.log('asd')
-
+        props.clearInput()
+        console.log('blur')
     }
 
     return (
