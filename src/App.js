@@ -1,92 +1,172 @@
 import React, {Component} from 'react';
-import './App.css';
+import classes from './App.module.scss';
+import AddCategory from './components/AddCategory/AddCategory';
 import Categories from './components/Categories/Categories';
+import citiesJson from './json/cities-data.json';
+import Map from './components/Map/Map';
 
 class App extends Component {
 
     state = {
         inputValue: '',
+        categorySelect: '',
+        locations: [],
         categories: [],
         selectedCategory:'',
+        editLocation: '',
         editCategory: '',
-        errorMessage: false
+        errorMessage: false,
+        currentCategoryID: '',
+        cityCoordinates:'',
+        categoriesCoordinates: []
     };
 
-    setCategoryName = (event) => {
-        const inputValue = event.target.value;
+    fieldValidation = () => {
+        const locationsList = [...this.state.locations];
+        const categoriesList = [...this.state.categories];
+        
+        for(let i=0; i < locationsList.length; i++){
+            const checkIflocationExist = locationsList[i] === this.state.inputValue;
+            const checkIfCategoryExist = categoriesList[i] === this.state.categorySelect;
+
+            if(checkIflocationExist && checkIfCategoryExist){
+                this.setState({errorMessage: true});
+                break;
+            }else{
+                this.setState({errorMessage: false});
+            }
+        }
+    }
+    
+    setCategoryHandler = (value, tagName) => {
+        if(tagName === 'LI' || tagName === 'INPUT'){
+            this.setState({inputValue: value, editCategory: ''}, this.fieldValidation.bind(this));
+        }else{
+            this.setState({categorySelect: value}, this.fieldValidation.bind(this));
+        }
+    };
+
+    renderCategoryHandler = () => {
+        const locationsList = [...this.state.locations];
+        const categoriesList = [...this.state.categories];   
+        const currentCategoryID = this.state.currentCategoryID;
+        
+        if(this.state.editLocation === '' && this.state.editCategory === ''){
+            locationsList.push(this.state.inputValue);
+            categoriesList.push(this.state.categorySelect);
+        }else {
+            locationsList[currentCategoryID] = (this.state.inputValue);
+            categoriesList[currentCategoryID] = (this.state.categorySelect);
+        }
+        
         this.setState({
-            inputValue: inputValue,
-            errorMessage: false
+            inputValue: '',
+            categorySelect: '',
+            selectedCategory: '',
+            editLocation: '',
+            locations: locationsList,
+            categories: categoriesList,
+            currentCategoryID: ''
         });
     };
 
-    renderCategory = () => {
-        const categoriesList = [...this.state.categories];
-        const checkIfCategoryexist = categoriesList.includes(this.state.inputValue);
-
-        this.setState({errorMessage: checkIfCategoryexist});
-
-        if(this.state.inputValue !== '' && !checkIfCategoryexist){
-
-            const categoryIndex = categoriesList.findIndex(category => category === this.state.editCategory);
-            categoriesList[categoryIndex] = this.state.inputValue;
-
-            if(!this.state.editCategory){
-                categoriesList.push(this.state.inputValue)
-            }
-
+    selectCategoryHandler = (index) => {
+        const locationsList = [...this.state.locations];
+        const currentCategoryID = index;
+        
+        if(this.state.selectedCategory === ''){
+            this.setState({
+                currentCategoryID: index,
+                selectedCategory: locationsList[currentCategoryID]
+            });    
+        
+        }else{
             this.setState({
                 inputValue: '',
+                categorySelect: '',
+                selectedCategory: '',
+                editLocation: '',
                 editCategory: '',
-                categories: categoriesList
-            });
-        }
-    };
-
-    selectCategory = (categoryName) => {
-        if(categoryName !== this.state.selectedCategory){
-            const categoriesList = [...this.state.categories];
-            const categoryIndex = categoriesList.findIndex(category => category === categoryName);
-            this.setState({selectedCategory: categoriesList[categoryIndex]});
-        }else{
-            this.setState({selectedCategory: ''});
+                errorMessage: '',
+                currentCategoryID: ''
+            });    
         }
     }
 
-    deleteCategory = (categoryName) => {
-        const categoriesList = [...this.state.categories];
-        const categoryIndex = categoriesList.findIndex(category => category === categoryName);
-        categoriesList.splice(categoryIndex, 1);
-        if(categoryName === this.state.inputValue){
-            this.setState({errorMessage: false});
-        }
-        this.setState({categories: categoriesList});
-    }
-
-    editCategory = (categoryName) => {
-        const categoriesList = [...this.state.categories];
-        const categoryIndex = categoriesList.findIndex(category => category === categoryName);
+    deleteCategoryHandler = () => {
+        const categoriesList = [...this.state.locations];
+        const currentCategoryID = this.state.currentCategoryID;
+        
+        categoriesList.splice(currentCategoryID, 1);
+        
         this.setState({
-            inputValue: categoriesList[categoryIndex],
-            editCategory: categoriesList[categoryIndex]
+            inputValue: '',
+            editLocation: '',
+            locations: categoriesList,
+            currentCategoryID: '',
+            errorMessage: false
         });
     }
 
+    editCategoryHandler = (index) => {
+        const locationsList = [...this.state.locations];
+        const categoriesList = [...this.state.categories];
+        const currentCategoryID = this.state.currentCategoryID;
+        
+        this.setState({
+            inputValue: locationsList[currentCategoryID],
+            editLocation: locationsList[currentCategoryID],
+            categorySelect: categoriesList[currentCategoryID],
+            editCategory: categoriesList[currentCategoryID]
+        });
+    }
+
+    setCoordinatesHandler = (currentCategoryID) => {
+        const locationsList = [...this.state.locations];
+        const categoriesList = [...this.state.categories];
+        const cityName = locationsList[currentCategoryID];
+        const categoryName = categoriesList[currentCategoryID];
+        let cityData = citiesJson.filter(data => data.cityName === cityName)[0];
+        let categoryCoordinates = cityData.categories.filter(data => data.category === categoryName)[0].coordinates;
+        
+        this.setState({
+            cityCoordinates: cityData.coordinates,
+            categoriesCoordinates: categoryCoordinates
+            
+        });
+        
+        setTimeout(() => {
+            this.setState({cityCoordinates: ""});
+        },100)
+    }
+    
     render() {
+        const editClasses = this.state.editLocation !== '' ? 'edit' : '';
+        
         return (
-            <div className="App">
-                <Categories
-                    inputValue={this.state.inputValue}
-                    categoriesList={this.state.categories}
-                    setCategoryName={this.setCategoryName}
-                    renderCategory={this.renderCategory}
-                    errorMessage={this.state.errorMessage}
-                    selectCategory={this.selectCategory}
-                    deleteCategory={this.deleteCategory}
-                    editCategory={this.editCategory}
-                    highlighted={this.state.selectedCategory}
-                    clearInput={this.clearInput}
-                />
+            <div className={classes.App}>
+            
+                <div className={[classes.category_bar, editClasses].join(' ')}>
+                    <AddCategory 
+                        state={this.state}
+                        setCategory={this.setCategoryHandler}
+                        renderCategory={this.renderCategoryHandler}
+                        citiesJson={citiesJson}/>
+            
+                    <Categories
+                        state={this.state}
+                        selectCategoryHandler={this.selectCategoryHandler}
+                        deleteCategoryHandler={this.deleteCategoryHandler}
+                        editCategoryHandler={this.editCategoryHandler}
+                        setCoordinatesHandler={this.setCoordinatesHandler}/>
+                </div>
+            
+                <Map 
+                    cityCoordinates={this.state.cityCoordinates}
+                    categoriesCoordinates={this.state.categoriesCoordinates}
+                    citiesJson={citiesJson}
+                    categoriesMarker={this.categoriesCoordinates}/>
+            
             </div>
         );
     }

@@ -1,0 +1,52 @@
+.add_category_wrapper {
+        height: 30px;
+        display: flex;
+        box-shadow: 0px 0px 13px 0px #989898;
+        background: rgba(56, 54, 54, 0.2);
+
+        .select_wrapper {
+            background: #fff;
+            margin: 0 5px;
+            width: 100px;
+            overflow: hidden;
+
+            :global(.edit) & {
+               border: solid 1px red;
+            }
+            select {
+                height: 100%;
+                border: none;
+                border-radius: 0;
+                background: #fff;
+            }
+        }
+
+        .errorMessage {
+            color: red;
+            background: #e8dada;
+            text-align: left;
+            font-size: 12px;
+            padding: 5px;
+        }
+    
+        button {
+            width: 100px;
+            color: #fff;
+            background: #79cc79;
+            font-weight: bold;
+            border: none;
+            padding: 0;
+            transition: all .2s ease-in-out;
+            :global(.edit) & {
+               background: #ef9c6c;
+            }
+            &:not([disabled]):hover {
+                background: #5c9e5c;
+                transform: scale(1.05);
+            }
+
+            &:disabled {
+                background: #c8dcc8;
+            }
+        }
+    }

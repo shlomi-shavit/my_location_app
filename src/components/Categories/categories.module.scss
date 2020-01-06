@@ -1,117 +1,88 @@
 .categories_navigation {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 230px;
-  margin: 10px;
-  font-size: 14px;
-  background: rgba(80, 138, 138, 0.3);
-  box-shadow: 0px 0px 6px 0px #508a8a;
-
-  .add_category_wrapper {
-    height: 100%;
     display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    background: rgba(113, 123, 123, 0.3);
+    box-shadow: 0px 0px 6px 1px #989898;
 
-    input {
-      height: 30px;
-      width: 100%;
-      border: none;
-      padding-left: 5px;
+    .categories_wrapper {
+        background: #fff;
+        color: #4b7079;
+        margin-top: 1px;
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            padding: 5px;
+            border-top: solid 1px #d8d8d8;
+            cursor: pointer;
+
+            &:first-child {
+                border: none;
+            }
+
+            &.highlight {
+                background: #4b9baf;
+                color: #fff;
+                position: relative;
+            }
+
+            &:hover {
+                background: #4b9baf;
+                color: #fff;
+            }
+        }
     }
-    button {
-      width: 160px;
-      color: #fff;
-      background: #79cc79;
-      font-weight: bold;
-      margin-left: 5px;
-      border: none;
-      transition: all .2s ease-in-out;
-      &:not([disabled]):hover {
-        background: #5c9e5c;
-        transform: scale(1.05);
-      }
-      &:disabled {
-        background: #c8dcc8;
-      }
-    }
-  }
 
-  .categories_wrapper {
-    background: #fff;
-    color: #4b7079;
-    border-radius: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    margin-top: 1px;
-
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
-    li {
-      padding: 5px;
-      border-top: solid 1px #d8d8d8;
-      cursor: pointer;
-      &:first-child {
-        border: none;
-      }
-      &.highlight{
-        background: #4b9baf;
-        color: #fff;
-        position: relative;
-      }
-      &:hover {
-        background: #4b9baf;
-        color: #fff;
-      }
-    }
-  }
-
-  .errorMessage {
-    color: red;
-    background: #e8dada;
-    text-align: left;
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .manage_category {
-    position: absolute;
-    right: -113px;
-    width: 100px;
-    top: -30px;
-    background: #fff;
-    color: #4b7079;
-    border-radius: 10px;
-    animation-name: lefToRight;
-    animation-duration: .3s;
-    box-shadow: 0px 0px 13px 0px #639c9c;
-
-    ul {
-      display: flex;
-      flex-direction: column;
-      &:before {
-        content: '';
+    .manage_location {
         position: absolute;
-        left: -10px;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        width: 0;
-        height: 0;
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
-        border-right: 10px solid #fff;
-      }
-      li {
-        flex-grow: 1;
-      }
+        right: -113px;
+        width: 100px;
+        top: -30px;
+        background: #fff;
+        color: #4b7079;
+        border-radius: 10px;
+        animation-name: lefToRight;
+        animation-duration: .3s;
+        box-shadow: 0px 0px 13px 0px #989898;
+
+        ul {
+            display: flex;
+            flex-direction: column;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: -10px;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                width: 0;
+                height: 0;
+                border-top: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                border-right: 10px solid #fff;
+            }
+
+            li {
+                flex-grow: 1;
+            }
+        }
     }
-  }
 }
 
 @keyframes lefToRight {
-  from {opacity:0; right: 0;}
-  to {opacity:1;right: -113px;}
+    from {
+        opacity: 0;
+        right: 0;
+    }
+
+    to {
+        opacity: 1;
+        right: -113px;
+    }
 }
