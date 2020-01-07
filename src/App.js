@@ -142,11 +142,12 @@ class App extends Component {
     
     render() {
         const editClasses = this.state.editLocation !== '' ? 'edit' : '';
+        const errorClasses = this.state.errorMessage ? 'error' : '';
         
         return (
             <div className={classes.App}>
             
-                <div className={[classes.category_bar, editClasses].join(' ')}>
+                <div className={[classes.category_bar, editClasses, errorClasses].join(' ')}>
                     <AddCategory 
                         state={this.state}
                         setCategory={this.setCategoryHandler}
