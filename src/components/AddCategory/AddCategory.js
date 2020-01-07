@@ -5,7 +5,10 @@ import SearchCity from '../SearchCity/SearchCity.js';
 
 const AddCategory = (props) => {
     
-    const buttonValidation = props.state.inputValue !== '' && props.state.categorySelect !== '' && !props.state.errorMessage;
+    const buttonValidation = props.state.inputValue !== '' && 
+                             props.state.categorySelect !== '' && 
+                             !props.state.errorMessage && 
+                             props.state.cityFromInputExist;
 
     return (
         <AuxWraper>
@@ -19,7 +22,7 @@ const AddCategory = (props) => {
 
                 <div className={classes.select_wrapper}>
                     <select
-                        onChange={(event) => props.setCategory(event.target.value, event.target.tagName)}
+                        onChange={(event) => props.setCategory(event.target.value, event.target.tagName, props.state.cityFromInputExist)}
                         value={props.state.categorySelect}>
                        <option>Select category</option>
                        <option>Parkings</option>

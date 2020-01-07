@@ -6,51 +6,63 @@ class SearchCity extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            suggestions: [],
+            citiesList: [],
             text: this.props.inputValue
         };
     }
 
     onTextChanged = (event, tagName) => {
         const value = event.target.value;
-        let suggestions = [];
+        let citiesList = [];
         let cities = [];
         const citiesData = this.props.citiesJson;
+        let cityExist;
         
         if(value.length > 0){
             const regex = new RegExp(`${value}`, `i`);
             citiesData.map(city => {
-                return cities.push(city.cityName);
+                return cities.push(city.cityName.toLowerCase());
             });
-            suggestions = cities.sort().filter(citi => regex.test(citi));
+            citiesList = cities.sort().filter(citi => regex.test(citi));
+            cityExist = citiesList.includes(value);
         }
         
-        this.props.setCategory(value, tagName);
+        this.props.setCategory(value, tagName, cityExist);
         
         this.setState({
-            suggestions: suggestions,
+            citiesList: citiesList,
             text: this.props.inputValue
         });
     }
 
-    renderSuggestions() {
-        const suggestions = this.state.suggestions;
-        if (suggestions.length !== 0) {
+    renderCitiesList() {
+        const citiesList = this.state.citiesList;
+        if (citiesList.length !== 0) {
             return (
                 <ul>
-                    {suggestions.map((city, index)=> <li key={index} onClick={(event) => this.suggestionSelected(city, event.target.tagName)}>{city}</li>)}
+                    {citiesList.map((city, index)=> <li key={index} onClick={(event) => this.citySelected(city, event.target.tagName)}>{city}</li>)}
                 </ul>
             );
         }
     }
 
-    suggestionSelected (city, tagName){
-        this.props.setCategory(city, tagName);
+    citySelected (city, tagName){
+        const cityExist = this.state.citiesList.includes(city);
+        this.props.setCategory(city, tagName, cityExist);
         
         this.setState({
-            suggestions: [],
+            citiesList: [],
             text: city
         })
+    }
+
+    onBlurHandler (){
+        
+        setTimeout(() => {
+            this.setState({
+                citiesList: []
+            });
+        }, 170)
     }
 
     render() {
@@ -59,9 +71,10 @@ class SearchCity extends Component {
             <div className={classes.SearchCity}>
                 <input type="text" 
                        onChange={(event) => this.onTextChanged(event, event.target.tagName)}
+                       onBlur={() => this.onBlurHandler(this)}
                        value={this.props.inputValue}
                        placeholder='Add location'/>
-                {this.renderSuggestions()}
+                {this.renderCitiesList()}
             </div>
         )
     }

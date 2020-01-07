@@ -16,6 +16,7 @@ class App extends Component {
         editLocation: '',
         editCategory: '',
         errorMessage: false,
+        cityFromInputExist: false,
         currentCategoryID: '',
         cityCoordinates:'',
         categoriesCoordinates: []
@@ -38,7 +39,9 @@ class App extends Component {
         }
     }
     
-    setCategoryHandler = (value, tagName) => {
+    setCategoryHandler = (value, tagName, cityExist) => {
+        this.setState({cityFromInputExist: cityExist});
+        
         if(tagName === 'LI' || tagName === 'INPUT'){
             this.setState({inputValue: value, editCategory: ''}, this.fieldValidation.bind(this));
         }else{
@@ -104,7 +107,8 @@ class App extends Component {
             editLocation: '',
             locations: categoriesList,
             currentCategoryID: '',
-            errorMessage: false
+            errorMessage: false,
+            categoriesCoordinates: []
         });
     }
 
@@ -126,7 +130,7 @@ class App extends Component {
         const categoriesList = [...this.state.categories];
         const cityName = locationsList[currentCategoryID];
         const categoryName = categoriesList[currentCategoryID];
-        let cityData = citiesJson.filter(data => data.cityName === cityName)[0];
+        let cityData = citiesJson.filter(data => data.cityName.toLowerCase() === cityName)[0];
         let categoryCoordinates = cityData.categories.filter(data => data.category === categoryName)[0].coordinates;
         
         this.setState({

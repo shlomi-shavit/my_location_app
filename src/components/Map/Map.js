@@ -41,7 +41,7 @@ const Map = (props) => {
                 key={index}
                 latitude={coordinates[0]}
                 longitude={coordinates[1]}>
-                <img src="https://i.imgur.com/MK4NUzI.png" />
+                <img src="https://i.imgur.com/MK4NUzI.png" alt="map marker"/>
                     
             </Marker>
         )}
