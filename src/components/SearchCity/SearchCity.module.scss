@@ -9,7 +9,8 @@
         box-sizing: border-box;
         position: relative;
         z-index: 2;
-        :global(.edit) & {
+        :global(.edit) &,
+        :global(.error) &{
            border: solid 1px red;
         }
     }
