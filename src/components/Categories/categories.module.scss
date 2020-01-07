@@ -44,12 +44,12 @@
         right: -113px;
         width: 100px;
         top: -30px;
-        background: #fff;
         color: #4b7079;
         border-radius: 10px;
         animation-name: lefToRight;
         animation-duration: .3s;
         box-shadow: 0px 0px 13px 0px #989898;
+        background: rgba(113, 123, 123, 0.5);
 
         ul {
             display: flex;
