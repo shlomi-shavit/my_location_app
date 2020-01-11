@@ -1,6 +1,13 @@
 
 .SearchCity {
 
+    .resultsBG {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
    input {
         width: 100px;
         height: 100%;
@@ -9,6 +16,7 @@
         box-sizing: border-box;
         position: relative;
         z-index: 2;
+        text-transform: capitalize;
         :global(.edit) &,
         :global(.error) &{
            border: solid 1px red;
@@ -29,6 +37,7 @@
         padding: 5px;
         border-top: solid 1px grey;
         cursor: pointer;
+        text-transform: capitalize;
         &:hover {
             background: #5ec0d8;
             color: #fff

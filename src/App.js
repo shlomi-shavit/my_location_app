@@ -51,7 +51,7 @@ class App extends Component {
 
     renderCategoryHandler = () => {
         const locationsList = [...this.state.locations];
-        const categoriesList = [...this.state.categories];   
+        const categoriesList = [...this.state.categories];
         const currentCategoryID = this.state.currentCategoryID;
         
         if(this.state.editLocation === '' && this.state.editCategory === ''){
@@ -71,6 +71,7 @@ class App extends Component {
             categories: categoriesList,
             currentCategoryID: ''
         });
+                
     };
 
     selectCategoryHandler = (index) => {
@@ -136,14 +137,13 @@ class App extends Component {
         this.setState({
             cityCoordinates: cityData.coordinates,
             categoriesCoordinates: categoryCoordinates
-            
         });
         
         setTimeout(() => {
             this.setState({cityCoordinates: ""});
         },100)
     }
-    
+
     render() {
         const editClasses = this.state.editLocation !== '' ? 'edit' : '';
         const errorClasses = this.state.errorMessage ? 'error' : '';

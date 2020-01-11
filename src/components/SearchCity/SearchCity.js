@@ -39,9 +39,12 @@ class SearchCity extends Component {
         const citiesList = this.state.citiesList;
         if (citiesList.length !== 0) {
             return (
-                <ul>
-                    {citiesList.map((city, index)=> <li key={index} onClick={(event) => this.citySelected(city, event.target.tagName)}>{city}</li>)}
-                </ul>
+                <div>
+                    <div className={classes.resultsBG} onClick={this.closeCitiesResults.bind(this)}></div>
+                    <ul>
+                        {citiesList.map((city, index)=> <li key={index} onClick={(event) => this.citySelected(city, event.target.tagName)}>{city}</li>)}
+                    </ul>
+                </div>
             );
         }
     }
@@ -56,13 +59,10 @@ class SearchCity extends Component {
         })
     }
 
-    onBlurHandler (){
-        
-        setTimeout(() => {
-            this.setState({
-                citiesList: []
-            });
-        }, 170)
+    closeCitiesResults (){
+        this.setState({
+            citiesList: []
+        });
     }
 
     render() {
@@ -71,7 +71,6 @@ class SearchCity extends Component {
             <div className={classes.SearchCity}>
                 <input type="text" 
                        onChange={(event) => this.onTextChanged(event, event.target.tagName)}
-                       onBlur={() => this.onBlurHandler(this)}
                        value={this.props.inputValue}
                        placeholder='Add location'/>
                 {this.renderCitiesList()}
